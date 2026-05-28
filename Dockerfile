@@ -1,13 +1,13 @@
-FROM public.ecr.aws/docker/library/alpine:3.20.3
+FROM public.ecr.aws/docker/library/alpine:3.22.4
 
-RUN mkdir /app
+WORKDIR /app/go-go-gin
 
-COPY go-binary /app/go-binary
+COPY go-binary .
 
-WORKDIR /app
-
-EXPOSE 8080
+RUN chmod +x go-binary
 
 USER 65534:65534
 
-ENTRYPOINT ["/app/go-binary"]
+EXPOSE 8080
+
+ENTRYPOINT ["./go-binary"]
