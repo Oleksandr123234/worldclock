@@ -1,0 +1,60 @@
+# worldclock
+
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+
+A Helm chart for Kubernetes
+
+**Homepage:** <https://github.com/epmd-edp/go-go-gin.git>
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| DEV Team |  |  |
+
+## Source Code
+
+* <https://github.com/epmd-edp/go-go-gin.git>
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| affinity | object | `{}` | https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity |
+| autoscaling.enabled | bool | `false` |  |
+| autoscaling.maxReplicas | int | `100` |  |
+| autoscaling.minReplicas | int | `1` |  |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| fullnameOverride | string | `""` |  |
+| httproute.annotations | object | `{}` |  |
+| httproute.dnsWildcard | string | `"eks-sandbox.aws.main.edp.projects.epam.com"` |  |
+| httproute.enabled | bool | `false` |  |
+| httproute.gateway | object | `{"name":"main-gateway","namespace":"envoy-gateway-system"}` | Parent Gateway the HTTPRoute attaches to. Defaults to the platform gateway. |
+| httproute.hosts[0].host | string | `"edpDefault"` |  |
+| httproute.hosts[0].paths[0].path | string | `"/"` |  |
+| httproute.hosts[0].paths[0].pathType | string | `"PathPrefix"` |  |
+| image.digest | string | `""` | Image digest for immutable reference (e.g., sha256:abc123...). If set, deployed as :tag@digest. |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.repository | string | `"worldclock"` |  |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| imagePullSecrets[0].name | string | `"regcred"` |  |
+| livenessProbe.tcpSocket.port | string | `"http"` |  |
+| nameOverride | string | `""` |  |
+| nodeSelector | object | `{}` | https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
+| podSecurityContext | object | `{}` |  |
+| readinessProbe.initialDelaySeconds | int | `20` |  |
+| readinessProbe.tcpSocket.port | string | `"http"` |  |
+| replicaCount | int | `1` |  |
+| resources | object | `{}` |  |
+| securityContext | object | `{}` |  |
+| service.port | int | `8080` |  |
+| service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| tolerations | list | `[]` | https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
+| volumeMounts | list | `[]` |  |
+| volumes | list | `[]` |  |

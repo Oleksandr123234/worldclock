@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "worldclock.fullname" . }}-test-connection"
+  labels:
+    {{- include "worldclock.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "worldclock.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
