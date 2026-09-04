@@ -5,33 +5,54 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"gin-gonic/pkg/hello"
-
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestHelloEndpoint(t *testing.T) {
-	// Set Gin to Test Mode
+func testZones() []zoneInfo {
+	return []zoneInfo{
+		{Name: "UTC", OffsetMins: 0},
+		{Name: "Europe/Kyiv", OffsetMins: 120},
+	}
+}
+
+func TestHealthzEndpoint(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
-	// Use the router setup from main.go
-	r := setupRouter()
+	r := setupRouter(testZones())
 
-	// Create a new HTTP request
-	req, err := http.NewRequest(http.MethodGet, "/hello", nil)
+	req, err := http.NewRequest(http.MethodGet, "/healthz", nil)
 	assert.NoError(t, err)
 
-	// Create a response recorder
 	rr := httptest.NewRecorder()
-
-	// Perform the request
 	r.ServeHTTP(rr, req)
 
-	// Check the status code
 	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, "ok", rr.Body.String())
+}
 
-	// Check the response body
-	expected := `{"message":"` + hello.GetMessage() + `"}`
-	assert.JSONEq(t, expected, rr.Body.String())
+func TestIndexEndpoint(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	r := setupRouter(testZones())
+
+	req, err := http.NewRequest(http.MethodGet, "/", nil)
+	assert.NoError(t, err)
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Contains(t, rr.Body.String(), "UTC")
+	assert.Contains(t, rr.Body.String(), "Europe/Kyiv")
+}
+
+func TestLoadZones(t *testing.T) {
+	t.Setenv("TIMEZONES", "UTC,Europe/Kyiv")
+
+	zones := loadZones()
+
+	assert.Len(t, zones, 2)
+	assert.Equal(t, "UTC", zones[0].Name)
+	assert.Equal(t, "Europe/Kyiv", zones[1].Name)
 }
