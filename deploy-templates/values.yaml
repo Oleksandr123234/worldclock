@@ -50,7 +50,7 @@ service:
 configMap:
   enabled: true
   data:
-    TIMEZONES: "UTC,Europe/Kyiv,America/New_York"
+    TIMEZONES: "UTC,Europe/Kyiv,America/New_Yourk"
 # Expose the application via a Gateway API HTTPRoute on the shared Envoy Gateway.
 httproute:
   enabled: false
