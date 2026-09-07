@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	_ "time/tzdata"
 
 	"github.com/gin-gonic/gin"
 )
